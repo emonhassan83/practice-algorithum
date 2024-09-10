@@ -1,0 +1,1 @@
+//* https://basecamp.eolymp.com/en/problems/1365
