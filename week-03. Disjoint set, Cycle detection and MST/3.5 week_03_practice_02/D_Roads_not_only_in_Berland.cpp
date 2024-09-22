@@ -54,7 +54,7 @@ int main()
      int n;
     cin >> n;
     
-    vector<pair<int, int>> edges; // To store all the original roads
+    vector<pair<int, int>> edges;
 
     for (int i = 0; i < n - 1; i++) {
         int a, b;
@@ -64,25 +64,21 @@ int main()
 
     dsu_initialize(n);
 
-    // Step 1: Union all the given roads
     for (auto &road : edges) {
         dsu_union_by_size(road.first, road.second);
     }
 
-    // Step 2: Find all the components (leaders of each component)
     vector<int> leaders;
     for (int i = 1; i <= n; i++) {
         if (dsu_find(i) == i) {
-            leaders.push_back(i); // Each leader represents a distinct component
+            leaders.push_back(i);
         }
     }
 
-    int t = leaders.size() - 1; // Number of new roads to connect all components
+    int t = leaders.size() - 1; 
     cout << t << endl;
 
-    // Step 3: For each leader, we will create a new road connecting components
     for (int i = 1; i < leaders.size(); i++) {
-        // Close an existing road and open a new road connecting components
         cout << edges[i - 1].first << " " << edges[i - 1].second << " " 
              << leaders[0] << " " << leaders[i] << endl;
     }
