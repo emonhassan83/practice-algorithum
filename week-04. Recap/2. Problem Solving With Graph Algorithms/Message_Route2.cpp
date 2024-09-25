@@ -4,7 +4,6 @@ using namespace std;
 const int N = 10e5 + 5;
 vector<int> v[N];
 bool vis[N];
-int dis[N];
 int parent[N];
 
 void bfs(int src)
@@ -13,7 +12,6 @@ void bfs(int src)
     q.push(src);
 
     vis[src] = true;
-    dis[src] = 0;
 
     while (!q.empty())
     {
@@ -26,7 +24,6 @@ void bfs(int src)
             {
                 vis[child] = true;
                 q.push(child);
-                dis[child] = dis[par] + 1;
                 parent[child] = par;
             }
         }
@@ -48,29 +45,30 @@ int main()
     }
 
     memset(vis, false, sizeof(vis));
-    memset(dis, -1, sizeof(dis));
     memset(parent, -1, sizeof(parent));
 
     bfs(1);
 
-    if(dis[n] == -1) cout << "IMPOSSIBLE" << endl;
+    int x = n;
+    vector<int> path;
+    while (x != -1)
+    {
+        path.push_back(x);
+        x = parent[x];
+    }
+
+    reverse(path.begin(), path.end());
+    
+    if (path.size() == 1)
+        cout << "IMPOSSIBLE" << endl;
     else
     {
-        int x = n;
-        vector<int> path;
-        while (x != -1)
-        {
-            path.push_back(x);
-            x = parent[x];
-        }
-
-        reverse(path.begin(), path.end());
         cout << path.size() << endl;
-        
+
         for (int val : path)
             cout << val << " ";
         cout << endl;
     }
-    
+
     return 0;
 }
